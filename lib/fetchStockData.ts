@@ -1,5 +1,18 @@
 import Papa from 'papaparse'
 
+interface StockData {
+  Ticker: string;
+  'Market Capitalization (B)': string;
+  'P/E Ratio': string;
+  'ROE (%)': string;
+  'Debt-to-Equity': string;
+  'Dividend Yield (%)': string;
+  'Revenue Growth (%)': string;
+  'EPS Growth (%)': string;
+  'Current Ratio': string;
+  'Gross Margin (%)': string;
+}
+
 export async function fetchStockData() {
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQIH14Y1_iJa5PU5tBm5OQRnbR3qdLAMv2j9DuRukbiK1ku0IqOlOMmopqTCQkj2WVMI7a_ko3-U0k8/pub?output=csv'
 
@@ -28,20 +41,20 @@ export async function fetchStockData() {
             console.error('Parse errors:', results.errors)
           }
 
-          const stocks = results.data
-            .filter((row: any) => row['Ticker'])
-            .map((row: any, index) => ({
+          const stocks = (results.data as StockData[])
+            .filter((row) => row['Ticker'])
+            .map((row, index) => ({
               id: index + 1,
               name: row['Ticker'],
-              marketCap: parseFloat(String(row['Market Capitalization (B)']).replace(/,/g, '')) || 0,
-              pe: parseFloat(String(row['P/E Ratio']).replace(/,/g, '')) || 0,
-              roe: parseFloat(String(row['ROE (%)']).replace(/,/g, '')) || 0,
-              debtToEquity: parseFloat(String(row['Debt-to-Equity']).replace(/,/g, '')) || 0,
-              divYield: parseFloat(String(row['Dividend Yield (%)']).replace(/,/g, '')) || 0,
-              revenueGrowth: parseFloat(String(row['Revenue Growth (%)']).replace(/,/g, '')) || 0,
-              epsGrowth: parseFloat(String(row['EPS Growth (%)']).replace(/,/g, '')) || 0,
-              currentRatio: parseFloat(String(row['Current Ratio']).replace(/,/g, '')) || 0,
-              grossMargin: parseFloat(String(row['Gross Margin (%)']).replace(/,/g, '')) || 0
+              marketCap: parseFloat(row['Market Capitalization (B)'].replace(/,/g, '')),
+              pe: parseFloat(row['P/E Ratio'].replace(/,/g, '')),
+              roe: parseFloat(row['ROE (%)'].replace(/,/g, '')),
+              debtToEquity: parseFloat(row['Debt-to-Equity'].replace(/,/g, '')),
+              divYield: parseFloat(row['Dividend Yield (%)'].replace(/,/g, '')),
+              revenueGrowth: parseFloat(row['Revenue Growth (%)'].replace(/,/g, '')),
+              epsGrowth: parseFloat(row['EPS Growth (%)'].replace(/,/g, '')),
+              currentRatio: parseFloat(row['Current Ratio'].replace(/,/g, '')),
+              grossMargin: parseFloat(row['Gross Margin (%)'].replace(/,/g, ''))
             }))
 
           console.log('Processed stocks:', stocks.slice(0, 2))
