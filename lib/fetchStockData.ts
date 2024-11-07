@@ -46,15 +46,15 @@ export async function fetchStockData() {
             .map((row, index) => ({
               id: index + 1,
               name: row['Ticker'],
-              marketCap: parseFloat(row['Market Capitalization (B)'].replace(/,/g, '')),
-              pe: parseFloat(row['P/E Ratio'].replace(/,/g, '')),
-              roe: parseFloat(row['ROE (%)'].replace(/,/g, '')),
-              debtToEquity: parseFloat(row['Debt-to-Equity'].replace(/,/g, '')),
-              divYield: parseFloat(row['Dividend Yield (%)'].replace(/,/g, '')),
-              revenueGrowth: parseFloat(row['Revenue Growth (%)'].replace(/,/g, '')),
-              epsGrowth: parseFloat(row['EPS Growth (%)'].replace(/,/g, '')),
-              currentRatio: parseFloat(row['Current Ratio'].replace(/,/g, '')),
-              grossMargin: parseFloat(row['Gross Margin (%)'].replace(/,/g, ''))
+              marketCap: parseFloat((row['Market Capitalization (B)'] || '0').replace(/,/g, '')),
+              pe: parseFloat((row['P/E Ratio'] || '0').replace(/,/g, '')),
+              roe: parseFloat((row['ROE (%)'] || '0').replace(/,/g, '')),
+              debtToEquity: parseFloat((row['Debt-to-Equity'] || '0').replace(/,/g, '')),
+              divYield: parseFloat((row['Dividend Yield (%)'] || '0').replace(/,/g, '')),
+              revenueGrowth: parseFloat((row['Revenue Growth (%)'] || '0').replace(/,/g, '')),
+              epsGrowth: parseFloat((row['EPS Growth (%)'] || '0').replace(/,/g, '')),
+              currentRatio: parseFloat((row['Current Ratio'] || '0').replace(/,/g, '')),
+              grossMargin: parseFloat((row['Gross Margin (%)'] || '0').replace(/,/g, ''))
             }))
 
           console.log('Processed stocks:', stocks.slice(0, 2))
