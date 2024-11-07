@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { fetchStockData } from '@/lib/fetchStockData'
-import { ChevronRight, PlayCircle, Beaker } from 'lucide-react'
+import { ChevronRight, PlayCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
